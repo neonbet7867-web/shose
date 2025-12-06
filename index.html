@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIKE Store | WhatsApp Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. RESET & VARIABLES --- */
+        :root {
+            --primary-color: #ffc200;
+            --black: #000000;
+            --white: #ffffff;
+            --grey-text: #555555;
+            --transition: all 0.4s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif; 
+            font-size: 14px; line-height: 1.5;
+            color: #111; background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Utility for Pages */
+        .page-section { display: none; animation: fadeIn 0.5s; padding-bottom: 50px; }
+        .page-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; }
+        button { cursor: pointer; }
+
+        /* --- 2. HEADER --- */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 4%; background: #fff; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #f0f0f0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo img { height: 25px; cursor: pointer; } 
+        .nav-menu { display: flex; gap: 30px; }
+        .nav-menu li { font-size: 13px; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .nav-menu li:hover { color: var(--primary-color); }
+        .header-actions { display: flex; gap: 20px; align-items: center; }
+        #cart-count { background: var(--primary-color); color: #000; font-size: 10px; padding: 2px 5px; border-radius: 50%; position: relative; top: -5px; }
+
+        /* --- 3. HERO SECTION & COUNTDOWN --- */
+        .hero {
+            position: relative; background: #f7f7f7; padding: 50px 4%;
+            min-height: 90vh; display: flex; align-items: center; overflow: hidden;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -50%; right: 20%;
+            width: 300px; height: 1000px; background: var(--primary-color);
+            transform: rotate(45deg); z-index: 0; transition: background 0.5s;
+        }
+        .hero-content { flex: 1; z-index: 2; max-width: 500px; }
+        .hero h1 { font-size: 48px; line-height: 1.1; font-weight: 900; margin-bottom: 10px; }
+        
+        /* COUNTDOWN TIMER STYLES */
+        .countdown-container {
+            display: flex; gap: 15px; margin: 20px 0;
+        }
+        .time-box {
+            background: #000; color: #fff; padding: 10px; border-radius: 5px; text-align: center; min-width: 60px;
+        }
+        .time-val { font-size: 18px; font-weight: bold; color: var(--primary-color); display: block; }
+        .time-label { font-size: 10px; text-transform: uppercase; }
+
+        .btn-black {
+            background: var(--black); color: var(--white);
+            padding: 12px 30px; font-size: 13px; font-weight: 700;
+            text-transform: uppercase; border: none; transition: 0.3s;
+            border-radius: 4px;
+        }
+        .btn-black:hover { background: #333; transform: scale(1.05); }
+
+        .hero-image { flex: 1; z-index: 2; position: relative; display: flex; justify-content: center; }
+        .big-text-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 120px; font-weight: 900; opacity: 0.05; z-index: -1; text-align: center; width: 100%; }
+        .hero-shoe-img { width: 600px; transform: rotate(-20deg); filter: drop-shadow(0 30px 40px rgba(0,0,0,0.4)); transition: 0.5s; }
+
+        /* --- 4. GRID & PRODUCTS --- */
+        .section-container { padding: 40px 4%; }
+        .section-title { font-size: 24px; font-weight: 800; margin-bottom: 30px; text-transform: uppercase; border-left: 5px solid var(--primary-color); padding-left: 15px; }
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        
+        .product-card {
+            background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #eee;
+            transition: 0.3s; cursor: pointer; position: relative;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .card-img { height: 180px; display: flex; align-items: center; justify-content: center; background: #f9f9f9; border-radius: 5px; margin-bottom: 15px; }
+        .card-img img { width: 90%; mix-blend-mode: multiply; }
+        .card-title { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+        .card-price { font-size: 13px; color: #666; }
+
+        /* --- 5. PRODUCT DETAIL & FORM --- */
+        .detail-container { display: flex; gap: 50px; padding: 50px 4%; align-items: center; }
+        .detail-img { flex: 1; background: #f7f7f7; padding: 50px; border-radius: 20px; text-align: center; }
+        .detail-img img { width: 80%; transform: rotate(-15deg); filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2)); }
+        .detail-info { flex: 1; }
+        
+        .option-title { font-size: 12px; font-weight: bold; margin-bottom: 8px; margin-top: 15px; text-transform: uppercase; }
+        
+        /* Size Selector */
+        .size-selector { display: flex; gap: 10px; }
+        .size-box { width: 40px; height: 40px; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
+        .size-box.selected { background: #000; color: #fff; border-color: #000; }
+        
+        /* Color Selector */
+        .color-selector { display: flex; gap: 10px; }
+        .color-circle { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+        .color-circle.selected { border-color: #000; transform: scale(1.1); box-shadow: 0 0 5px rgba(0,0,0,0.3); }
+
+        /* Checkout Modal Form */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 2000; display: none;
+            justify-content: center; align-items: center;
+        }
+        .modal-box {
+            background: #fff; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+        }
+        .modal-title { font-size: 20px; font-weight: bold; margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { font-size: 12px; font-weight: bold; display: block; margin-bottom: 5px; }
+        .form-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; outline: none; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 20px; cursor: pointer; color: #777; }
+
+        /* --- 6. MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 20px; }
+            .hero::after { right: -50px; width: 150px; }
+            .hero-image { width: 100%; height: 250px; }
+            .hero-shoe-img { width: 80%; transform: rotate(-10deg); }
+            .big-text-bg { font-size: 60px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .detail-container { flex-direction: column; }
+            .detail-img img { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo" onclick="navigateTo('home')">
+            <img src="https://image2url.com/images/1765037460059-04869559-ac37-4339-a0fd-e3e62f5bc0ff.png" alt="Nike">
+        </div>
+        <ul class="nav-menu">
+            <li onclick="navigateTo('home')">Home</li>
+            <li onclick="navigateTo('men')">Men</li>
+            <li onclick="navigateTo('women')">Women</li>
+            <li onclick="navigateTo('collections')">Collections</li>
+        </ul>
+        <div class="header-actions">
+            <div class="icon-btn" onclick="navigateTo('cart')">
+                <i class="fas fa-shopping-bag" style="font-size: 20px;"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- === PAGE 1: HOME === -->
+    <div id="home" class="page-section active">
+        <!-- Hero Slider with Countdown -->
+        <section class="hero">
+            <div class="hero-content">
+                <span style="color: #ff0000; font-weight: bold; font-size: 13px;">🔥 FLASH SALE ENDS IN:</span>
+                
+                <!-- Countdown Timer -->
+                <div class="countdown-container">
+                    <div class="time-box"><span class="time-val" id="hours">12</span><span class="time-label">Hrs</span></div>
+                    <div class="time-box"><span class="time-val" id="mins">45</span><span class="time-label">Mins</span></div>
+                    <div class="time-box"><span class="time-val" id="secs">30</span><span class="time-label">Secs</span></div>
+                </div>
+
+                <h1 id="hero-title">New Jordan 6 Rings</h1>
+                <p id="hero-desc">The Jordan 6 Rings Men's Shoe celebrates a legendary career with classic design lines.</p>
+                <button class="btn-black" onclick="openProduct({name: 'Jordan 6 Rings', price: 180, img: 'https://parspng.com/wp-content/uploads/2023/02/shoespng.parspng.com-12.png'})">Buy Now - $180</button>
+            </div>
+            <div class="hero-image">
+                <div class="big-text-bg">JUST<br>DO IT</div>
+                <img src="https://image2url.com/images/1765038080374-015aa30c-830c-4ffa-ba6a-2f3e2baa4e85.png" id="hero-img" class="hero-shoe-img">
+            </div>
+        </section>
+
+        <!-- Top Picks -->
+        <section class="section-container">
+            <div class="section-title">Trending Now</div>
+            <div class="product-grid" id="home-grid">
+                <!-- JS Injected -->
+            </div>
+        </section>
+    </div>
+
+    <!-- === PAGE 2: MEN === -->
+    <div id="men" class="page-section">
+        <section class="section-container">
+            <div class="section-title">Men's Collection</div>
+            <div class="product-grid" id="men-grid"></div>
+        </section>
+    </div>
+
+    <!-- === PAGE 3: WOMEN === -->
+    <div id="women" class="page-section">
+        <section class="section-container">
+            <div class="section-title">Women's Collection</div>
+            <div class="product-grid" id="women-grid"></div>
+        </section>
+    </div>
+
+    <!-- === PAGE 4: COLLECTIONS === -->
+    <div id="collections" class="page-section">
+        <section class="section-container">
+            <div class="section-title">All Collections</div>
+            <div class="product-grid" id="all-grid"></div>
+        </section>
+    </div>
+
+    <!-- === PAGE 5: PRODUCT DETAIL (Selection Page) === -->
+    <div id="product-detail" class="page-section">
+        <div class="detail-container">
+            <div class="detail-img">
+                <img id="detail-image" src="" alt="Product">
+            </div>
+            <div class="detail-info">
+                <h1 id="detail-title">Product Title</h1>
+                <div style="font-size: 28px; color: var(--primary-color); font-weight: bold; margin-bottom: 20px;" id="detail-price">$0.00</div>
+                
+                <!-- Size Selection -->
+                <div class="option-title">Select Size</div>
+                <div class="size-selector" id="size-options">
+                    <div class="size-box" onclick="selectSize(this)">7</div>
+                    <div class="size-box selected" onclick="selectSize(this)">8</div>
+                    <div class="size-box" onclick="selectSize(this)">9</div>
+                    <div class="size-box" onclick="selectSize(this)">10</div>
+                </div>
+
+                <!-- Color Selection -->
+                <div class="option-title">Select Color</div>
+                <div class="color-selector" id="color-options">
+                    <div class="color-circle selected" style="background: #000;" data-color="Black" onclick="selectColor(this)"></div>
+                    <div class="color-circle" style="background: #fff; border: 1px solid #ddd;" data-color="White" onclick="selectColor(this)"></div>
+                    <div class="color-circle" style="background: #ff0000;" data-color="Red" onclick="selectColor(this)"></div>
+                    <div class="color-circle" style="background: #0000ff;" data-color="Blue" onclick="selectColor(this)"></div>
+                </div>
+
+                <p style="margin: 20px 0; color: #666; font-size: 13px;">Premium quality with free shipping and 30-day returns.</p>
+                
+                <div style="display: flex; gap: 15px;">
+                    <button class="btn-black" style="flex: 1;" onclick="openCheckoutModal()">BUY NOW</button>
+                    <button class="btn-black" style="flex: 1; background: #fff; color: #000; border: 2px solid #000;" onclick="addToCartFromDetail()">ADD TO CART</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === PAGE 6: CART === -->
+    <div id="cart" class="page-section">
+        <section class="section-container">
+            <div class="section-title">Your Cart</div>
+            <div id="cart-content"></div>
+        </section>
+    </div>
+
+    <!-- === MODAL: CHECKOUT FORM === -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
+            <div class="modal-title">Shipping Details</div>
+            
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="cust-name" class="form-input" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="tel" id="cust-mobile" class="form-input" placeholder="Enter mobile number">
+            </div>
+            <div class="form-group">
+                <label>Delivery Address</label>
+                <input type="text" id="cust-address" class="form-input" placeholder="House No, Street, City">
+            </div>
+            
+            <!-- Summary inside Form -->
+            <div style="background: #f9f9f9; padding: 10px; margin-bottom: 20px; border-radius: 5px; font-size: 12px;">
+                <p><b>Product:</b> <span id="summ-name"></span></p>
+                <p><b>Size:</b> <span id="summ-size"></span> | <b>Color:</b> <span id="summ-color"></span></p>
+                <p><b>Total:</b> <span id="summ-price" style="color: green; font-weight: bold;"></span> (COD Available)</p>
+            </div>
+
+            <button class="btn-black" style="width: 100%;" onclick="sendToWhatsApp()">CONFIRM ORDER via WhatsApp <i class="fab fa-whatsapp"></i></button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT Logic -->
+    <script>
+        // --- 1. CONFIGURATION ---
+        const OWNER_PHONE = "919999999999"; // Change this to your WhatsApp Number (with country code)
+
+        // --- 2. DATA ---
+        const products = [
+            { id: 1, name: "Kyrie 5 x Friends", price: 115, cat: "men", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5816.png" },
+            { id: 2, name: "Air Max 720", price: 155, cat: "men", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5823.png" },
+            { id: 3, name: "Zoom Pegasus 35", price: 160, cat: "women", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5817.png" },
+            { id: 4, name: "Jordan Retro High", price: 190, cat: "men", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5786.png" },
+            { id: 5, name: "Nike React Pink", price: 130, cat: "women", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5818.png" },
+            { id: 6, name: "Air Force Kid", price: 90, cat: "kids", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5823.png" },
+            { id: 7, name: "Runner Pro", price: 110, cat: "kids", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5817.png" },
+            { id: 8, name: "Jordan Low", price: 140, cat: "women", img: "https://pngimg.com/uploads/running_shoes/running_shoes_PNG5786.png" },
+        ];
+
+        let cart = [];
+        let selectedProduct = {};
+        let selectedSize = "8";
+        let selectedColor = "Black";
+
+        // --- 3. COUNTDOWN TIMER ---
+        function startTimer() {
+            let hours = 24, mins = 0, secs = 0;
+            setInterval(() => {
+                secs--;
+                if(secs < 0) { secs = 59; mins--; }
+                if(mins < 0) { mins = 59; hours--; }
+                if(hours < 0) { hours = 24; } // Reset loop
+                
+                document.getElementById('hours').innerText = hours < 10 ? '0'+hours : hours;
+                document.getElementById('mins').innerText = mins < 10 ? '0'+mins : mins;
+                document.getElementById('secs').innerText = secs < 10 ? '0'+secs : secs;
+            }, 1000);
+        }
+        startTimer();
+
+        // --- 4. NAVIGATION ---
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+            
+            if(pageId === 'home') renderGrid('all', 'home-grid');
+            if(pageId === 'men') renderGrid('men', 'men-grid');
+            if(pageId === 'women') renderGrid('women', 'women-grid');
+            if(pageId === 'collections') renderGrid('all', 'all-grid');
+            if(pageId === 'cart') renderCart();
+        }
+
+        function renderGrid(category, divId) {
+            const container = document.getElementById(divId);
+            container.innerHTML = '';
+            const filtered = category === 'all' ? products : products.filter(p => p.cat === category);
+            
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => openProduct(p);
+                card.innerHTML = `
+                    <div class="card-img"><img src="${p.img}"></div>
+                    <div class="card-title">${p.name}</div>
+                    <div class="card-price">$${p.price}</div>
+                    <button style="position:absolute; bottom:15px; right:15px; background:#000; color:#fff; border:none; border-radius:50%; width:30px; height:30px; cursor:pointer;">+</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- 5. PRODUCT DETAILS & SELECTION ---
+        function openProduct(product) {
+            selectedProduct = product;
+            document.getElementById('detail-image').src = product.img;
+            document.getElementById('detail-title').innerText = product.name;
+            document.getElementById('detail-price').innerText = '$' + product.price;
+            
+            // Reset Selections
+            selectedSize = "8";
+            selectedColor = "Black";
+            updateSelectionUI();
+            
+            navigateTo('product-detail');
+        }
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-box').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedSize = element.innerText;
+        }
+
+        function selectColor(element) {
+            document.querySelectorAll('.color-circle').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedColor = element.getAttribute('data-color');
+        }
+
+        function updateSelectionUI() {
+            // Reset visual classes
+            document.querySelectorAll('.size-box').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.size-box')[1].classList.add('selected'); // Default 8
+            
+            document.querySelectorAll('.color-circle').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.color-circle')[0].classList.add('selected'); // Default Black
+        }
+
+        // --- 6. ADD TO CART ---
+        function addToCartFromDetail() {
+            cart.push({...selectedProduct, size: selectedSize, color: selectedColor});
+            document.getElementById('cart-count').innerText = cart.length;
+            alert('Added to Cart!');
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-content');
+            if(cart.length === 0) {
+                container.innerHTML = '<p style="padding:20px; text-align:center;">Cart is empty.</p>';
+                return;
+            }
+            let html = '';
+            let total = 0;
+            cart.forEach((item, i) => {
+                total += item.price;
+                html += `
+                    <div style="display:flex; align-items:center; gap:15px; border-bottom:1px solid #eee; padding:15px 0;">
+                        <img src="${item.img}" style="width:50px; background:#eee;">
+                        <div style="flex:1;">
+                            <b>${item.name}</b><br>
+                            <span style="font-size:12px; color:#666;">Size: ${item.size} | Color: ${item.color}</span>
+                        </div>
+                        <div>$${item.price}</div>
+                    </div>
+                `;
+            });
+            html += `<div style="text-align:right; font-size:20px; font-weight:bold; margin-top:20px;">Total: $${total}</div>`;
+            container.innerHTML = html;
+        }
+
+        // --- 7. WHATSAPP CHECKOUT SYSTEM ---
+        function openCheckoutModal() {
+            document.getElementById('summ-name').innerText = selectedProduct.name;
+            document.getElementById('summ-size').innerText = selectedSize;
+            document.getElementById('summ-color').innerText = selectedColor;
+            document.getElementById('summ-price').innerText = '$' + selectedProduct.price;
+            
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('cust-name').value;
+            const mobile = document.getElementById('cust-mobile').value;
+            const address = document.getElementById('cust-address').value;
+
+            if(!name || !mobile || !address) {
+                alert("Please fill all details!");
+                return;
+            }
+
+            // Create Message
+            const message = `*NEW ORDER ALERT* %0a---------------------------%0a*Product:* ${selectedProduct.name}%0a*Price:* $${selectedProduct.price}%0a*Size:* ${selectedSize}%0a*Color:* ${selectedColor}%0a---------------------------%0a*Customer Details:*%0aName: ${name}%0aMobile: ${mobile}%0aAddress: ${address}%0a%0aPayment Mode: Cash On Delivery`;
+
+            // Open WhatsApp
+            const url = `https://wa.me/${OWNER_PHONE}?text=${message}`;
+            window.open(url, '_blank');
+            closeCheckoutModal();
+        }
+
+        // Initial Render
+        renderGrid('all', 'home-grid');
+
+    </script>
+</body>
+</html>
