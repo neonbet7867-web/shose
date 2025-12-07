@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ShoeStyle Store | Premium Indian Footwear</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -30,7 +30,8 @@
             font-family: 'Poppins', sans-serif;
             font-size: 14px; line-height: 1.6;
             color: var(--text-color); background-color: var(--white);
-            overflow-x: hidden;
+            overflow-x: hidden; /* Fixes side cut issue */
+            width: 100%;
         }
 
         .fade-in { animation: fadeInUp 0.6s ease forwards; }
@@ -47,34 +48,35 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 5%; background: #fff; position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            width: 100%;
         }
 
         .brand-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 26px; font-weight: 700; color: var(--black);
-            cursor: pointer; letter-spacing: 0.5px;
+            font-size: 24px; font-weight: 700; color: var(--black);
+            cursor: pointer; letter-spacing: 0.5px; white-space: nowrap;
         }
         .brand-logo span { color: var(--primary); }
 
-        .nav-menu { display: flex; gap: 35px; list-style: none; }
+        .nav-menu { display: flex; gap: 30px; list-style: none; }
         .nav-menu li { font-weight: 600; text-transform: uppercase; font-size: 13px; cursor: pointer; position: relative; color: var(--black); }
         .nav-menu li:hover { color: var(--primary); }
 
-        .header-actions { display: flex; gap: 20px; align-items: center; }
-        .icon-wrap { position: relative; cursor: pointer; font-size: 20px; color: var(--black); transition: 0.3s; }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+        .icon-wrap { position: relative; cursor: pointer; font-size: 18px; color: var(--black); transition: 0.3s; }
         .icon-wrap:hover { color: var(--primary); transform: translateY(-2px); }
-        .badge { background: var(--black); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 50%; position: absolute; top: -8px; right: -8px; }
+        .badge { background: var(--black); color: #fff; font-size: 10px; padding: 2px 5px; border-radius: 50%; position: absolute; top: -8px; right: -8px; }
 
         /* Search Bar */
         .search-container { position: relative; }
-        .search-input { padding: 5px 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 12px; width: 150px; transition: 0.3s; }
-        .search-input:focus { width: 200px; border-color: var(--black); }
+        .search-input { padding: 5px 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 12px; width: 120px; transition: 0.3s; }
+        .search-input:focus { width: 180px; border-color: var(--black); }
 
         /* --- 3. UI COMPONENTS --- */
         .btn-black {
-            background: var(--black); color: var(--white); padding: 14px 35px; 
+            background: var(--black); color: var(--white); padding: 12px 30px; 
             font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-            border-radius: 30px; 
+            border-radius: 30px; width: auto; max-width: 100%;
         }
         .btn-black:hover { background: var(--primary); color: var(--black); box-shadow: 0 5px 15px rgba(255, 194, 0, 0.4); transform: translateY(-2px); }
 
@@ -88,111 +90,161 @@
         .hero {
             position: relative; background: #f9f9f9; padding: 60px 5%;
             min-height: 85vh; display: flex; align-items: center; overflow: hidden;
+            width: 100%;
         }
         .hero::after {
             content: ''; position: absolute; bottom: -50%; right: 15%;
             width: 450px; height: 1200px; background: var(--primary);
             transform: rotate(45deg); z-index: 0; opacity: 0.9;
         }
-        .hero-content { flex: 1; z-index: 2; max-width: 600px; }
-        .hero h1 { font-size: 65px; line-height: 1.1; font-weight: 900; margin-bottom: 20px; color: var(--black); font-family: 'Playfair Display', serif; }
+        .hero-content { flex: 1; z-index: 2; max-width: 600px; position: relative; }
+        .hero h1 { font-size: 55px; line-height: 1.1; font-weight: 900; margin-bottom: 20px; color: var(--black); font-family: 'Playfair Display', serif; }
         .hero-image { flex: 1; z-index: 2; display: flex; justify-content: center; position: relative; }
-        .big-text-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 180px; font-weight: 900; opacity: 0.04; z-index: -1; width: 100%; text-align: center; }
-        .hero-shoe-img { width: 650px; transform: rotate(-25deg); filter: drop-shadow(0 30px 50px rgba(0,0,0,0.3)); transition: 0.5s; }
-        .hero-shoe-img:hover { transform: rotate(-20deg) scale(1.02); }
-
+        .big-text-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 150px; font-weight: 900; opacity: 0.04; z-index: -1; width: 100%; text-align: center; pointer-events: none; }
+        .hero-shoe-img { width: 100%; max-width: 600px; transform: rotate(-25deg); filter: drop-shadow(0 30px 50px rgba(0,0,0,0.3)); transition: 0.5s; }
+        
         /* --- 5. CARDS --- */
-        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 30px; 
+            width: 100%;
+        }
+        
         .card { 
             background: #fff; border: 1px solid transparent; padding: 15px; 
             border-radius: 12px; transition: 0.4s; position: relative; cursor: pointer; 
+            width: 100%;
         }
         .card:hover { border-color: var(--border); box-shadow: var(--shadow); transform: translateY(-8px); }
         .card-img { 
-            height: 220px; display: flex; align-items: center; justify-content: center; 
+            height: 200px; display: flex; align-items: center; justify-content: center; 
             background: #f7f7f7; border-radius: 8px; margin-bottom: 15px; position: relative; overflow: hidden;
         }
         .card-img img { width: 85%; mix-blend-mode: multiply; transition: 0.4s; }
         .card:hover .card-img img { transform: scale(1.1); }
         .discount-badge { 
-            position: absolute; top: 12px; left: 12px; 
+            position: absolute; top: 10px; left: 10px; 
             background: var(--primary); color: var(--black); 
-            font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+            font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .card-info h3 { font-size: 16px; margin-bottom: 8px; font-weight: 600; color: var(--black); }
-        .price-wrap { display: flex; gap: 10px; align-items: center; }
-        .card-price { font-size: 18px; font-weight: 700; color: #d32f2f; }
-        .card-old-price { font-size: 13px; text-decoration: line-through; color: #aaa; font-weight: 400; }
+        .card-info h3 { font-size: 15px; margin-bottom: 5px; font-weight: 600; color: var(--black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .price-wrap { display: flex; gap: 8px; align-items: center; flex-wrap: wrap;}
+        .card-price { font-size: 16px; font-weight: 700; color: #d32f2f; }
+        .card-old-price { font-size: 12px; text-decoration: line-through; color: #aaa; font-weight: 400; }
         .card-btn-icon {
             position: absolute; bottom: 15px; right: 15px;
-            width: 35px; height: 35px; background: var(--black); color: #fff;
+            width: 30px; height: 30px; background: var(--black); color: #fff;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             opacity: 0; transform: translateY(10px); transition: 0.3s;
         }
         .card:hover .card-btn-icon { opacity: 1; transform: translateY(0); }
 
-        /* --- 6. SHOPS & FILTER --- */
-        .shop-container { display: flex; gap: 40px; padding: 60px 5%; }
+        /* --- 6. PAGE LAYOUTS --- */
+        .shop-container { display: flex; gap: 40px; padding: 60px 5%; width: 100%; }
         .sidebar { flex: 0 0 250px; padding-right: 20px; border-right: 1px solid var(--border); }
-        .shop-content { flex: 1; }
+        .shop-content { flex: 1; width: 100%; }
         .filter-group { margin-bottom: 30px; }
         .filter-title { font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; color: var(--black); }
         .filter-list li { margin-bottom: 10px; font-size: 13px; color: #666; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         .filter-list li:hover { color: var(--primary); }
         .checkbox { cursor: pointer; }
+        
         .banner-header {
             background-size: cover; background-position: center; 
             padding: 80px 5%; text-align: center; color: #fff; margin-bottom: 40px; border-radius: 12px;
-            position: relative; overflow: hidden;
+            position: relative; overflow: hidden; width: 100%;
         }
         .banner-header::before { content:''; position:absolute; inset:0; background: rgba(0,0,0,0.5); }
         .banner-content { position: relative; z-index: 2; }
         .banner-content h1 { font-size: 40px; font-family: 'Playfair Display'; margin-bottom: 10px; }
-        .sorting-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 15px; background: #f9f9f9; border-radius: 8px; }
+        .sorting-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 15px; background: #f9f9f9; border-radius: 8px; flex-wrap: wrap; gap: 10px;}
 
         /* --- 7. DASHBOARD --- */
-        .auth-container { max-width: 400px; margin: 80px auto; padding: 40px; border: 1px solid var(--border); border-radius: 12px; text-align: center; box-shadow: var(--shadow); }
-        .dashboard-container { display: flex; gap: 30px; padding: 60px 5%; min-height: 60vh; }
+        .auth-container { max-width: 400px; margin: 40px auto; padding: 30px; border: 1px solid var(--border); border-radius: 12px; text-align: center; box-shadow: var(--shadow); width: 90%; }
+        .dashboard-container { display: flex; gap: 30px; padding: 60px 5%; min-height: 60vh; width: 100%; }
         .dash-sidebar { flex: 0 0 250px; background: #f9f9f9; padding: 30px; border-radius: 12px; height: fit-content; }
         .user-profile-head { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #ddd; }
         .user-avatar { width: 80px; height: 80px; background: #ddd; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #fff; background: var(--primary); }
         .dash-menu li { padding: 12px 15px; cursor: pointer; border-radius: 6px; margin-bottom: 5px; transition: 0.3s; font-weight: 500; display: flex; align-items: center; gap: 10px; }
         .dash-menu li:hover, .dash-menu li.active { background: var(--black); color: #fff; }
-        .dash-content { flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
+        .dash-content { flex: 1; border: 1px solid var(--border); border-radius: 12px; padding: 30px; width: 100%; }
         .dash-section { display: none; }
         .dash-section.active { display: block; animation: fadeIn 0.5s; }
-        .order-item { border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .order-item { border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .status { padding: 5px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
         .status.delivered { background: #e8f5e9; color: #2e7d32; }
         .status.processing { background: #fff3e0; color: #ef6c00; }
 
         /* --- 8. FOOTER --- */
-        footer { background: #1a1a1a; color: #fff; padding: 80px 5% 20px; margin-top: 60px; }
+        footer { background: #1a1a1a; color: #fff; padding: 60px 5% 20px; margin-top: 60px; width: 100%; }
         .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 50px; }
         .footer-col h4 { font-size: 16px; margin-bottom: 20px; text-transform: uppercase; font-weight: 700; color: var(--primary); }
         .footer-col ul li { margin-bottom: 10px; color: #bbb; font-size: 13px; cursor: pointer; }
-        .footer-col ul li:hover { color: #fff; padding-left: 5px; transition: 0.2s; }
         .socials i { font-size: 18px; margin-right: 15px; cursor: pointer; color: #bbb; }
-        .socials i:hover { color: var(--primary); }
 
         /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: none; justify-content: center; align-items: center; }
         .modal-box { background: #fff; padding: 30px; width: 90%; max-width: 450px; border-radius: 12px; position: relative; }
         .form-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; outline: none; }
 
-        .page-section { display: none; }
+        .page-section { display: none; width: 100%; }
         .page-section.active { display: block; animation: fadeIn 0.5s; }
 
+        /* ================= MOBILE RESPONSIVE CSS ================= */
         @media (max-width: 768px) {
-            .nav-menu { display: none; }
-            .hero { flex-direction: column-reverse; text-align: center; padding-top: 40px; }
-            .hero-image { width: 100%; height: 250px; }
-            .hero-shoe-img { width: 80%; transform: rotate(-10deg); }
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .shop-container, .dashboard-container { flex-direction: column; }
-            .sidebar, .dash-sidebar { flex: auto; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 20px; padding-right: 0; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            /* General */
+            .section-padding { padding: 40px 4%; }
+            
+            /* Header */
+            header { padding: 15px 4%; }
+            .nav-menu { display: none; } /* Simplified mobile menu */
+            .search-input { width: 100px; display: none; } /* Hide search on extremely small screens or use icon click */
+            
+            /* Hero */
+            .hero { flex-direction: column-reverse; padding-top: 30px; text-align: center; height: auto; min-height: auto; }
+            .hero-content { width: 100%; padding: 0 10px; }
+            .hero h1 { font-size: 36px; margin-bottom: 15px; }
+            .hero-image { width: 100%; margin-bottom: 20px; height: auto; }
+            .hero-shoe-img { width: 90%; max-width: 350px; transform: rotate(-10deg); }
+            .big-text-bg { font-size: 80px; top: 40%; }
+            .hero::after { right: -50px; width: 200px; opacity: 0.5; }
+
+            /* Grid - CRITICAL FIX FOR CUT OFF */
+            .product-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px; 
+            }
+            .card { padding: 10px; }
+            .card-img { height: 140px; }
+            .card-info h3 { font-size: 13px; }
+            .card-price { font-size: 14px; }
+            .discount-badge { font-size: 9px; padding: 2px 6px; }
+            .card-btn-icon { width: 25px; height: 25px; bottom: 10px; right: 10px; opacity: 1; transform: translateY(0); } /* Always show btn on mobile */
+
+            /* Shop Pages */
+            .shop-container { flex-direction: column; padding: 20px 4%; }
+            .sidebar { flex: auto; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 20px; width: 100%; }
+            .sorting-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .banner-header { padding: 40px 5%; margin-bottom: 20px; }
+            .banner-content h1 { font-size: 28px; }
+
+            /* Dashboard */
+            .dashboard-container { flex-direction: column; padding: 20px 4%; }
+            .dash-sidebar { width: 100%; padding: 20px; }
+            .dash-content { padding: 20px; }
+            .order-item { flex-direction: column; align-items: flex-start; }
+            .order-item .text-center { text-align: left; margin-top: 10px; }
+
+            /* Product Detail */
+            #product-detail > div { flex-direction: column; padding: 20px 4%; gap: 30px; }
+            #detail-image { width: 100%; max-width: 300px; }
+            #detail-title { font-size: 28px; }
+
+            /* Footer */
+            footer { padding: 40px 5% 20px; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
         }
     </style>
 </head>
@@ -214,7 +266,7 @@
         <div class="header-actions">
             <!-- Search Input -->
             <div class="search-container">
-                <input type="text" id="global-search" class="search-input" placeholder="Search shoes..." onkeyup="handleSearch(this.value)">
+                <input type="text" id="global-search" class="search-input" placeholder="Search..." onkeyup="handleSearch(this.value)">
             </div>
 
             <div class="icon-wrap" onclick="navigateTo('wishlist')">
@@ -254,6 +306,16 @@
             </div>
             <div class="product-grid" id="home-grid"></div>
         </section>
+
+        <!-- Banner -->
+        <section style="background: url('https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=2000') no-repeat center/cover fixed; padding: 120px 5%; text-align: center; color: white; position: relative;">
+            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.6);"></div>
+            <div style="position: relative; z-index: 2;">
+                <h2 style="font-size: 45px; font-family: 'Playfair Display'; margin-bottom: 15px;">Step Into Greatness</h2>
+                <p style="margin-bottom: 30px; font-size: 16px; opacity: 0.9;">Exclusive collection for the modern Indian athlete.</p>
+                <button class="btn-black" style="background: #fff; color: #000;" onclick="navigateTo('sale')">Explore Sale</button>
+            </div>
+        </section>
     </div>
 
     <!-- 2. MEN PAGE -->
@@ -266,7 +328,6 @@
         </div>
         <div class="shop-container">
             <aside class="sidebar">
-                <!-- Filters -->
                 <div class="filter-group">
                     <div class="filter-title">Type</div>
                     <ul class="filter-list">
@@ -317,6 +378,12 @@
         <div class="section-padding text-center">
             <h1 style="color: #d32f2f;">EXCLUSIVE SALE</h1>
             <p>Limited time offers on premium footwear.</p>
+            
+            <!-- Sale Search/Filter -->
+            <div style="margin: 20px 0; display:flex; justify-content:center; gap: 10px;">
+                 <input type="text" placeholder="Search Sale items..." class="search-input" style="width: 200px; display:block;" onkeyup="handleSearch(this.value)">
+            </div>
+
             <div class="product-grid" id="sale-grid" style="margin-top: 40px;"></div>
         </div>
     </div>
@@ -422,7 +489,7 @@
             <input type="text" id="cust-address" class="form-input" placeholder="Delivery Address (City, Pincode)">
             <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                 <p><b>Total To Pay:</b> <span id="summ-price" style="color: #d32f2f; font-weight: bold;"></span></p>
-                <p style="font-size: 11px; margin-top: 5px;">Cash on Delivery Available</p>
+                <p style="font-size: 11px; margin-top: 5px;">Cash on Delivery Available (India Only)</p>
             </div>
             <button class="btn-black" style="width: 100%;" onclick="confirmOrder()">Place Order via WhatsApp</button>
         </div>
@@ -464,7 +531,7 @@
     </footer>
 
     <script>
-        // --- 1. CONFIG & DATA ---
+        // --- 1. CONFIG & DATA (Indian Prices) ---
         const OWNER_PHONE = "919999999999"; 
         
         // USER STATE (Simulated Backend)
@@ -488,6 +555,7 @@
         ];
 
         let cart = [];
+        let wishlist = [];
         let selectedProduct = {};
 
         // --- 2. AUTHENTICATION SYSTEM ---
@@ -602,17 +670,17 @@
         // Search Function
         function handleSearch(query) {
             const lowerQ = query.toLowerCase();
-            const allGrids = ['men-grid', 'women-grid', 'sale-grid', 'home-grid'];
+            const activeSection = document.querySelector('.page-section.active');
             
-            // If on home, do nothing or redirect. For simplicity, we filter only if inside a category page
-            // But let's make it work nicely:
-            if(query.length > 2) {
-                // If query exists, we can show results in the current view or redirect to a search view
-                // For this single-file setup, let's filter the current visible grid if possible
-                const activeSection = document.querySelector('.page-section.active');
-                if(activeSection.id === 'men' || activeSection.id === 'women' || activeSection.id === 'sale') {
-                    applyFilters(activeSection.id, lowerQ);
-                }
+            // Search works only within the active shop page to keep logic simple in one file
+            if(activeSection.id === 'men' || activeSection.id === 'women' || activeSection.id === 'sale') {
+                applyFilters(activeSection.id, lowerQ);
+            } else if (activeSection.id === 'home') {
+                // If on home, we filter the trending grid
+                const filtered = products.filter(p => p.name.toLowerCase().includes(lowerQ));
+                const grid = document.getElementById('home-grid');
+                grid.innerHTML = '';
+                filtered.forEach(p => grid.innerHTML += createCard(p));
             }
         }
 
@@ -676,8 +744,8 @@
         function renderHome() {
             const grid = document.getElementById('home-grid');
             grid.innerHTML = '';
-            // Show mixture
-            products.slice(0, 8).forEach(p => grid.innerHTML += createCard(p));
+            // Show mixture of non-sale items
+            products.filter(p => p.cat !== 'sale').slice(0, 8).forEach(p => grid.innerHTML += createCard(p));
         }
 
         function renderGrid(cat, id) {
